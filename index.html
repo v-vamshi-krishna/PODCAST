@@ -1,3 +1,4 @@
+please check here and do required changes and let me know
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,77 +10,233 @@
 </head>
 <body>
 
-<!-- NAV -->
+<!-- ═══════════════════════════════ NAV ═══════════════════════════════ -->
 <nav>
-  <div class="nav-logo" onclick="goHome(event)">Podcast<span>Hub</span></div>
+  <div class="nav-logo" data-page="home" onclick="goHome()">Podcast<span>Hub</span></div>
   <ul class="nav-links">
-    <li><a href="#" onclick="goHome(event)">Home</a></li>
-    <li><a href="#" onclick="goEpisodes(event)">Episodes</a></li>
-    <li><a href="#" onclick="goAbout(event)">About</a></li>
+    <li><a data-page="home" class="active" onclick="goHome()">Home</a></li>
+    <li><a data-page="episodes" onclick="goEpisodes()">Episodes</a></li>
+    <li><a data-page="about" onclick="goAbout()">About</a></li>
   </ul>
-  <button class="nav-search-btn" onclick="goSearch(event)">Search episodes</button>
+  <button class="nav-search-btn" onclick="goSearch()">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    Search episodes
+  </button>
 </nav>
 
-<!-- HOME -->
+<!-- ═══════════════════════════════ HOME ═══════════════════════════════ -->
 <div id="page-home" class="page active">
-  <!-- KEEP YOUR ORIGINAL CONTENT HERE -->
+
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow">New episode every Tuesday</div>
+      <h1>Conversations<br>that <em>actually</em><br>matter</h1>
+      <p>Weekly deep-dives with the people shaping technology, culture, and ideas. No fluff — just signal.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="goEpisodes()">Browse All Episodes</button>
+        <button class="btn-ghost" onclick="goSearch()">Ask Anything</button>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">6</div>
+          <div class="stat-label">Episodes</div>
+        </div>
+        <div>
+          <div class="stat-num">582K</div>
+          <div class="stat-label">Total Plays</div>
+        </div>
+        <div>
+          <div class="stat-num">6</div>
+          <div class="stat-label">Guests</div>
+        </div>
+      </div>
+    </div>
+    <div id="hero-featured"></div>
+  </div>
+
+  <div class="episodes-section">
+    <div class="section-header">
+      <h2 class="section-title">Latest Episodes</h2>
+      <a class="section-link" onclick="goEpisodes()">All episodes →</a>
+    </div>
+    <div class="episodes-grid" id="home-episodes-grid"></div>
+  </div>
+
 </div>
 
-<!-- EPISODES -->
+<!-- ═══════════════════════════════ EPISODES ═══════════════════════════════ -->
 <div id="page-episodes" class="page">
-  <!-- KEEP YOUR ORIGINAL CONTENT HERE -->
+  <div class="episodes-section" style="padding-top:100px">
+    <div class="section-header">
+      <h2 class="section-title">All Episodes</h2>
+      <span style="font-size:0.82rem;color:var(--text3)" id="ep-count"></span>
+    </div>
+    <div class="categories-bar" id="categories-bar"></div>
+    <div class="episodes-grid" id="all-episodes-grid"></div>
+  </div>
 </div>
 
-<!-- EPISODE DETAIL -->
-<div id="page-episode-detail" class="page"></div>
+<!-- ═══════════════════════════════ EPISODE DETAIL ═══════════════════════════════ -->
+<div id="page-episode-detail" class="page">
+  <div class="episode-detail" id="detail-content"></div>
+</div>
 
-<!-- SEARCH -->
-<div id="page-search" class="page"></div>
+<!-- ═══════════════════════════════ SEARCH ═══════════════════════════════ -->
+<div id="page-search" class="page">
+  <div class="search-page">
 
-<!-- ABOUT -->
+    <div class="search-hero">
+      <h1>Ask anything</h1>
+      <p>Search across all episodes. Our AI will find the exact moment you're looking for.</p>
+    </div>
+
+    <div class="search-box">
+      <span class="search-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </span>
+      <input
+        type="text"
+        id="search-query-input"
+        class="search-input"
+        placeholder="e.g. 'who talked about burnout' or 'deep work tips'"
+        onkeydown="handleSearch(event)"
+      >
+      <button class="search-submit" onclick="submitSearch()">Search</button>
+    </div>
+
+    <div class="rag-answer" id="rag-answer">
+      <div class="rag-label">AI Answer</div>
+      <div class="rag-text" id="rag-text"></div>
+      <div class="rag-source">
+        Source: <span id="rag-source-ep" style="color:var(--accent);cursor:pointer"></span>
+      </div>
+    </div>
+
+    <div id="search-results"></div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ ABOUT ═══════════════════════════════ -->
 <div id="page-about" class="page">
-  <!-- KEEP YOUR ORIGINAL CONTENT HERE -->
+  <div class="about-page">
+
+    <div class="about-hero">
+      <div>
+        <h1>We believe in conversations<br><em>worth keeping</em></h1>
+        <p>PodcastHub started as a simple idea: what if we made space for the kind of conversations that actually change how you think? The ones where the guest says something that sticks with you for weeks.</p>
+        <p>Every episode is produced with obsessive care — no sponsors mid-sentence, no artificial time limits, no talking points. Just honest conversation with people doing remarkable things.</p>
+        <button class="btn-primary" onclick="goEpisodes()">Start Listening</button>
+      </div>
+      <div class="about-img-wrap">
+        <img src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=600&q=80" alt="Recording studio">
+      </div>
+    </div>
+
+    <div class="section-header" style="margin-bottom:1.5rem">
+      <h2 class="section-title">The Team</h2>
+    </div>
+    <div class="team-grid" style="margin-bottom:4rem">
+      <div class="team-card">
+        <div class="team-avatar" style="background:var(--bg3)">MK</div>
+        <div class="team-name">Maya Krishnamurthy</div>
+        <div class="team-role">Host & Creator</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar" style="background:var(--bg3)">JC</div>
+        <div class="team-name">James Chen</div>
+        <div class="team-role">Audio Engineer</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar" style="background:var(--bg3)">SR</div>
+        <div class="team-name">Sara Reyes</div>
+        <div class="team-role">Producer</div>
+      </div>
+    </div>
+
+    <div class="section-header" style="margin-bottom:1.5rem">
+      <h2 class="section-title">What We Stand For</h2>
+    </div>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-icon">◎</div>
+        <div class="value-title">Depth over speed</div>
+        <div class="value-desc">We never rush. Every conversation gets the time it deserves. Our shortest episode is 45 minutes because some ideas can't be compressed.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">◈</div>
+        <div class="value-title">No agenda</div>
+        <div class="value-desc">We don't send questions in advance. The best moments come from genuine surprise — for us and our guests alike.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">◇</div>
+        <div class="value-title">Guest-first production</div>
+        <div class="value-desc">Every guest gets full edit rights. If they said something they regret, it comes out. Trust is more valuable than content.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">◉</div>
+        <div class="value-title">Listener-funded</div>
+        <div class="value-desc">No sponsors. No brand deals. We're supported entirely by listeners who believe in this kind of journalism. That independence matters.</div>
+      </div>
+    </div>
+
+  </div>
 </div>
 
-<!-- FOOTER -->
+<!-- ═══════════════════════════════ FOOTER ═══════════════════════════════ -->
 <footer>
-  <!-- KEEP YOUR ORIGINAL FOOTER -->
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">Podcast<span>Hub</span></div>
+      <p class="footer-desc">Weekly conversations with the people shaping how we think, work, and live. New episode every Tuesday.</p>
+      <div class="footer-social">
+        <button class="social-btn" title="Twitter" onclick="showToast('Twitter coming soon!')">𝕏</button>
+        <button class="social-btn" title="Spotify" onclick="showToast('Spotify coming soon!')">♫</button>
+        <button class="social-btn" title="Apple Podcasts" onclick="showToast('Apple Podcasts coming soon!')">◎</button>
+        <button class="social-btn" title="RSS" onclick="showToast('RSS feed coming soon!')">⊞</button>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h5>Episodes</h5>
+      <ul>
+        <li><a onclick="goEpisodes()">All Episodes</a></li>
+        <li><a onclick="renderEpisodesPage('Technology');goEpisodes()">Technology</a></li>
+        <li><a onclick="renderEpisodesPage('Product');goEpisodes()">Product</a></li>
+        <li><a onclick="renderEpisodesPage('Entrepreneurship');goEpisodes()">Entrepreneurship</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h5>Discover</h5>
+      <ul>
+        <li><a onclick="goSearch()">Search Episodes</a></li>
+        <li><a onclick="goAbout()">About Us</a></li>
+        <li><a onclick="showToast('Newsletter coming soon!')">Newsletter</a></li>
+        <li><a onclick="showToast('Transcripts coming soon!')">Transcripts</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h5>Listen On</h5>
+      <ul>
+        <li><a onclick="showToast('Spotify coming soon!')">Spotify</a></li>
+        <li><a onclick="showToast('Apple Podcasts coming soon!')">Apple Podcasts</a></li>
+        <li><a onclick="showToast('Google Podcasts coming soon!')">Google Podcasts</a></li>
+        <li><a onclick="showToast('RSS feed coming soon!')">RSS Feed</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2025 PodcastHub. Built with Claude AI.</span>
+    <span>Made with ♥ for curious people</span>
+  </div>
 </footer>
 
-<!-- Toast -->
+<!-- Toast notification -->
 <div class="toast" id="toast"></div>
 
-<!-- JS -->
 <script src="js/app.js"></script>
-
-<!-- ✅ SAFETY NAVIGATION SCRIPT (NEW - IMPORTANT) -->
-<script>
-function showPage(pageId) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  const page = document.getElementById(pageId);
-  if (page) page.classList.add('active');
-}
-
-function goHome(e) {
-  if (e) e.preventDefault();
-  showPage('page-home');
-}
-
-function goEpisodes(e) {
-  if (e) e.preventDefault();
-  showPage('page-episodes');
-}
-
-function goAbout(e) {
-  if (e) e.preventDefault();
-  showPage('page-about');
-}
-
-function goSearch(e) {
-  if (e) e.preventDefault();
-  showPage('page-search');
-}
-</script>
-
 </body>
 </html>
