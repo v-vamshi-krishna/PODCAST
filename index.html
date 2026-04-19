@@ -11,40 +11,75 @@
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo" onclick="goHome()">Podcast<span>Hub</span></div>
+  <div class="nav-logo" onclick="goHome(event)">Podcast<span>Hub</span></div>
   <ul class="nav-links">
-    <li><a href="#" onclick="goHome()">Home</a></li>
-    <li><a href="#" onclick="goEpisodes()">Episodes</a></li>
-    <li><a href="#" onclick="goAbout()">About</a></li>
+    <li><a href="#" onclick="goHome(event)">Home</a></li>
+    <li><a href="#" onclick="goEpisodes(event)">Episodes</a></li>
+    <li><a href="#" onclick="goAbout(event)">About</a></li>
   </ul>
-  <button class="nav-search-btn" onclick="goSearch()">
-    Search episodes
-  </button>
+  <button class="nav-search-btn" onclick="goSearch(event)">Search episodes</button>
 </nav>
 
 <!-- HOME -->
 <div id="page-home" class="page active">
-  <h1>Home Page</h1>
-  <button onclick="goEpisodes()">Browse Episodes</button>
+  <!-- KEEP YOUR ORIGINAL CONTENT HERE -->
 </div>
 
 <!-- EPISODES -->
 <div id="page-episodes" class="page">
-  <h1>Episodes Page</h1>
+  <!-- KEEP YOUR ORIGINAL CONTENT HERE -->
 </div>
+
+<!-- EPISODE DETAIL -->
+<div id="page-episode-detail" class="page"></div>
+
+<!-- SEARCH -->
+<div id="page-search" class="page"></div>
 
 <!-- ABOUT -->
 <div id="page-about" class="page">
-  <h1>About Page</h1>
+  <!-- KEEP YOUR ORIGINAL CONTENT HERE -->
 </div>
 
-<!-- SEARCH -->
-<div id="page-search" class="page">
-  <h1>Search Page</h1>
-</div>
+<!-- FOOTER -->
+<footer>
+  <!-- KEEP YOUR ORIGINAL FOOTER -->
+</footer>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
 
 <!-- JS -->
-<script src="app.js"></script>
+<script src="js/app.js"></script>
+
+<!-- ✅ SAFETY NAVIGATION SCRIPT (NEW - IMPORTANT) -->
+<script>
+function showPage(pageId) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const page = document.getElementById(pageId);
+  if (page) page.classList.add('active');
+}
+
+function goHome(e) {
+  if (e) e.preventDefault();
+  showPage('page-home');
+}
+
+function goEpisodes(e) {
+  if (e) e.preventDefault();
+  showPage('page-episodes');
+}
+
+function goAbout(e) {
+  if (e) e.preventDefault();
+  showPage('page-about');
+}
+
+function goSearch(e) {
+  if (e) e.preventDefault();
+  showPage('page-search');
+}
+</script>
 
 </body>
 </html>
